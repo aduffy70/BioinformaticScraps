@@ -1,0 +1,61 @@
+#! /usr/bin/perl
+# countgenes.pl
+# Aaron M Duffy aduffy70{at}gmail.com
+# Created July 2009
+
+# This script finds the number of different genes (sources) in tabular blast output.  The list must be sorted by gene (source) name.
+# Usage- I have a list of 7500 blast hits against my adiantum/angiopteris genes database.  I want to know how many different genes I have matches in.
+
+use strict;
+use warnings;
+
+#Verify that a files is on the command line.
+if ($#ARGV != 0)
+{
+    die "Please supply a tabular blast output file\n";
+}
+
+# Read  filename from the command line
+my ($file1) = @ARGV;
+
+# Make sure the file exists and can be read
+unless (-e $file1 && -r $file1)
+{
+    die "File cannot be found or accessed.\n";
+}
+
+#Open the file
+open FILE1, "$file1";
+
+
+# Declare some scalars
+my $count;
+my $countadiantum;
+my $countangiopteris;
+my $previousgene;
+my $thisgene;
+my $line;
+
+$count=1;
+$line = <FILE1>;
+if ($line =~ /^\S+\s+(\S+)/)
+{
+	$previousgene = $1;
+	print "$count\t$previousgene\n";
+}
+while ($line = <FILE1>)
+{
+    if ($line =~ /^\S+\s+(\S+)/)
+	{
+		$thisgene = $1;
+		if ($thisgene ne $previousgene)
+		{
+			$count++;
+			print "$count\t$thisgene\n";
+			$previousgene = $thisgene;
+		}
+	}
+}
+
+# Close the file
+close FILE1;
