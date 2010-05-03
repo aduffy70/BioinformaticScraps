@@ -1,8 +1,8 @@
 #! /usr/bin/env python
-# filterfasta.py
+# fastafilter.py
 # Filter a fasta file to include or exclude a list of sequences.
 # Prints to STDOUT, so redirect to file.
-# Usage: filter_fasta.py <sequence or quality fasta file> <list of sequence identifiers> "yes" || "no"
+# Usage: fastafilter.py <sequence or quality fasta file> <list of sequence identifiers> "yes" || "no"
 # Aaron M Duffy aduffy70{at}gmail.com
 # April 2010
 

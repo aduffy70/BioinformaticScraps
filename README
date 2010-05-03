@@ -47,13 +47,15 @@ fastaclean.pl    This script takes messy fasta files (with numbers or whitespace
 
 fastarename.pl    This script takes fasta files with Genbank names (gi|xxxxxxx|) and coverts the names to 4 letters for the genus and 4 letters for the species epithet.  This is a quick and dirty modification of my fastaclean script.
 
-filterfasta.py    This script takes a file of fasta sequences and a file listing the sequences wanted and pulls just those sequences (or everything other than those sequences) from the fasta file.  A first simple script using biopython.
+fastafilter.py    This script takes a file of fasta sequences and a file listing the sequences wanted and pulls just those sequences (or everything other than those sequences) from the fasta file.  A first simple script using biopython.
 
 fastadiff.py    This script performs a bi-directional comparison of two fasta files and returns the id's of sequences in one but missing from the other.  Surprisingly quick for even large fasta files.
 
 fastanames.pl    Just takes a fasta file and returns a list of the sequence id's.
 
-fastaglance.py  Returns the total number of records, mean sequence length, longest sequence, and shortest sequence for a fasta file.
+fastaglance.py    Returns the total number of records, mean sequence length, longest sequence, and shortest sequence for a fasta file.
+
+fastabreaks.py    Removes line breaks so that a fasta file has only 2 lines per record: 1 for the id and one for the sequence.  This avoids issues that extra line breaks can cause for some scripts.
 
 
 GENOME FILE SCRIPTS
