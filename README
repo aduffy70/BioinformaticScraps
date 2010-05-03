@@ -51,7 +51,9 @@ filterfasta.py    This script takes a file of fasta sequences and a file listing
 
 fastadiff.py    This script performs a bi-directional comparison of two fasta files and returns the id's of sequences in one but missing from the other.  Surprisingly quick for even large fasta files.
 
-fastaname.pl    Just takes a fasta file and returns a list of the sequence id's.
+fastanames.pl    Just takes a fasta file and returns a list of the sequence id's.
+
+fastaglance.py  Returns the total number of records, mean sequence length, longest sequence, and shortest sequence for a fasta file.
 
 
 GENOME FILE SCRIPTS
