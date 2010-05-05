@@ -49,6 +49,8 @@ fastarename.pl    This script takes fasta files with Genbank names (gi|xxxxxxx|)
 
 fastafilter.py    This script takes a file of fasta sequences and a file listing the sequences wanted and pulls just those sequences (or everything other than those sequences) from the fasta file.  A first simple script using biopython.
 
+fastafilterq.py    This script takes a file of fasta sequences and a desired sequence id and extracts just that one sequence from the fasta file.
+
 fastadiff.py    This script performs a bi-directional comparison of two fasta files and returns the id's of sequences in one but missing from the other.  Surprisingly quick for even large fasta files.
 
 fastanames.pl    Just takes a fasta file and returns a list of the sequence id's.
@@ -88,3 +90,5 @@ The following programs must be in your PATH:
 pop2struct.pl    This script converts a genepop input file to a structure input file.  It only works on files with a specific number of loci and the same number of digits in each allele record.
 
 unique.pl    This script finds the unique items in 2 files containing a list of genes.  The files must be lists with a single gene name starting each row (the output from my listgenes.pl script for example).  Any other information on the line will be ignored.  This script does not compare the files very efficiently so it may take a while for very long files.
+
+conservedmsats.py    This script finds microsatellites that may be conserved between two taxa.  It takes msatcommander output files and contig fasta files for two taxa and finds contigs containing the same repeat type that also show blast similarity (in areas other than the repeat, of course).  If we only have a sampling of two genomes this script may help us identify microsatellites that are homologous.
