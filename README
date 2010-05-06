@@ -40,6 +40,8 @@ countblastqueries.pl    This script finds the number of different blast queries 
 
 countgenes.pl    This script finds the number of different genes (sources) in tabular blast output.  The list must be sorted by gene (source) name.  Usage- I have a list of 7500 blast hits against my adiantum/angiopteris genes database.  I want to know how many different genes I have matches in.
 
+msatblast.py    This script takes the blast output produced by conservedmsats.py along with the contig fasta files for two taxa and aligns each pair of sequences that showed blast similarity.  Then the alignments can be manually inspected to see if the microsatellite is actually within the aligned region and whether there is enough conserved sequence to design universal primers.
+
 
 FASTA FILE SCRIPTS
 
