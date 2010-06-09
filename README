@@ -64,10 +64,37 @@ fastabreaks.py    Removes line breaks so that a fasta file has only 2 lines per 
 
 GENOME FILE SCRIPTS
 
+gb2tbl.py   This script convert a genbank flatfile to a features table for importing into Sequin and submitting to genbank.
+
+transexcept.py  This script is used when we had a list of annotated RNA edits in gff format that needed to be inserted into the correct CDS entries of a features table as trans_except tags.
+
 listgenes2.pl    This script filters ncbi genome files and returns just the gene names, locations, and orientations (1-forward, 0-reverse).  ***WARNING*** This script will miss any exons beyond the first two.  Manually check for genes with 2 or more introns!
 
+listgenes.py    Similar function to listgenes2.py but uses BioPython rather than raw perl parsing so it handles multiple exons better.
+
+listgenesXXXX.py    A series of versions of listgenes.py optimized to handle idiosyncrasies of specific genbank genome records:
+    listgenesPsnu.py Psilotum nudum (NC_003386)-like genomes:
+        tRNAs have anticodons included in the /gene name
+        Look for gene names in /gene, then, /note, then /product to capture orf#'s in the /note field.
+        No /pseudo tags
+    listgenesAdca.py Adiantum capillus-veneris (NC_004766)-like genomes:
+        Some tRNAs have anticodon annotations in /note so we try /note first.  If that fails we can get the name without annotation from /gene but then we can't filter for duplicates.
+        For non-tRNAs look for gene names in /gene, then /note, then /product.
+        No /pseudo tags
+    listgenesCyta.py Cycas taitungensis (NC_009618)-like genomes:
+        tRNAs don't have anticodon names in /gene, but it is in /codon_recognized, so we need to read both and combine them
+         Look for gene names in /gene, then, /note, then /product to capture orf#'s in the /note field.
+        Pseudogenes don't have a CDS, tRNA, or rRNA section so we need to check the gene sections for a /pseudo tags
+    listgenesPhap.py Phalaenopsis aphrodite (NC_007499)-like genomes:
+        Same as listgenesCyta.py except for tRNAs we need to combine /product and /note instead of /gene and /note.
+    listgenesPith.py Pinus thunbergii (NC_001631)-like genomes:
+        Pseudogenes don't have a CDS, tRNA, or rRNA section so we need to check the gene sections for a /pseudo tags
+        tRNAs dont have anticodon annotations in ANY field so we can't filter duplicates tRNAs.
+        Look for gene names in /gene, then product, then /note.
 listgenesfasta.pl    This script filters an ncbi genome file and a genome fasta file and returns a fasta file of the genes.  For genes with 2 exons and an intron, it returns the sequence of both exons with the intron, not separate entries for each exon.
 Known Issues: 1) It behaves strangely for genes like ndhB that have one exon at the start of the genome sequence and the other at the end.  You can fix those manually, or cheat by modifying the genbank file.  2) Genes with more than two exons will also cause problems.  They won't appear in the output.  3) Do fasta files allow line breaks within the sequence?  If your fasta file has line breaks within the sequence, only the data up to the first line break will be captured.  You can use my fastaclean.pl script to remove extra line breaks from a fasta file.
+
+listgenes.py
 
 structure2fasta.pl    This script takes the output of garnier (from the emboss package) and converts it to a fasta-like output so secondary structures can be aligned using alignment programs.  Hey- I'm not claiming this is really useful...
 
