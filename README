@@ -61,6 +61,7 @@ fastaglance.py    Returns the total number of records, mean sequence length, lon
 
 fastabreaks.py    Removes line breaks so that a fasta file has only 2 lines per record: 1 for the id and one for the sequence.  This avoids issues that extra line breaks can cause for some scripts.
 
+sortbycsv.py	Divides a single long file of fasta sequences into multiple files based on lines of a csv file of fasta names.  All the items on a single row will go into a file.  The name of each file comes from the first item on the row.  Useful for sorting fasta records by gene.
 
 GENOME FILE SCRIPTS
 
