@@ -176,3 +176,6 @@ unique.pl
 
 conservedmsats.py
     This script finds microsatellites that may be conserved between two taxa.  It takes msatcommander output files and contig fasta files for two taxa and finds contigs containing the same repeat type that also show blast similarity (in areas other than the repeat, of course).  If we only have a sampling of two genomes this script may help us identify microsatellites that are homologous.
+
+mlcminer.py
+    This script extracts dN/dS, dN and dS values from a directory of PAML output files (.mlc files).  It "mines" data from mlc files.  It is 3 separate scripts in one file.  Uncomment one section at a time to get dNdS values, dN values, and dS values.

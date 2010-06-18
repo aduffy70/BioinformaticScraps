@@ -34,6 +34,7 @@ for feature in gbRecord.features[1:]:
     duplicate = False
     # Is it a pseudogene?
     if ((feature.type == "gene") and ("pseudo" in feature.qualifiers.keys())):
+        pass
         if not(feature.qualifiers["gene"][0] in uniqueFeatures):
             uniqueFeatures = uniqueFeatures + [feature.qualifiers["gene"][0]]
             print ">" + taxonTag + "_" + feature.qualifiers["gene"][0] + " (pseudogene)"
