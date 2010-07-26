@@ -24,11 +24,6 @@ pattern = re.compile('Geneious name')
 for feature in gbRecord.features[1:]:
     if (len(feature.sub_features) > 0): # Handle features with no subfeatures
         firstSubFeature = True;
-# It looks like this step of reversing the order of subfeatures for features on the reverse strand is not necessary.  When this code was included and we imported to Sequin, all the reverse strand features had their exons in the wrong order.  I'm commenting this out but leaving it in til it has actually been tested and confirmed to be unnecessary.
-#        if (feature.strand == -1): # Reverse the order of subfeatures on the reverse strand
-#            orderedSubfeatures = reversed(feature.sub_features)
-#        else:
-#            orderedSubfeatures = feature.sub_features
         orderedSubfeatures = feature.sub_features #
         for subfeature in orderedSubfeatures:
             if (subfeature.strand == -1): # reverse strand
