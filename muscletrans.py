@@ -1,61 +1,77 @@
 #! /usr/bin/env python
-# muscletranny.py
+# muscletrans.py
 # Given a fasta file of dna sequences, performs a translation alignment using muscle with default settings.
-# Requires muscle in $PATH
-# Uses the bacterial translation table
-# Usage: muscletranny.py <file with multiple dna sequences in fasta format>
+# Saves the interleaved phylip format alignment to a file with the suffix _aln.phy. 
+# Uses the bacterial translation table by default (see configuration section below)
+# Requires muscle in your $PATH
+# Usage: muscletrans.py <file with multiple dna sequences in fasta format>
 # Aaron M Duffy aduffy70{at}gmail.com
-# May 2010
+# July 2010
 
 
-# import modules
-from sys import argv  # gives us a list of command line arguments
-from Bio import SeqIO  # biopython tools for reading/parsing sequence files
-from Bio import AlignIO
+from sys import argv
+from Bio import SeqIO, AlignIO
 from Bio.Align.Applications import MuscleCommandline
-from Bio.Seq import SeqRecord
+from Bio.Align.Generic import Alignment
+from Bio.Alphabet import IUPAC, Gapped
+from Bio.Seq import Seq, SeqRecord
 import subprocess
 import sys
 
-# Open the DNA sequence file
-dnaSeqFile = open(argv[1], 'r')
+def main():
+    # Configuration
+    #Select the desired NCBI translation table
+    translationTable = 11
 
-# Read the fasta sequences into a list
-dnaSeqDict = SeqIO.to_dict(SeqIO.parse(dnaSeqFile, "fasta"))
+    # Open the DNA sequence file and read the fasta sequences into a dictionary
+    dnaSeqFile = open(argv[1], 'r')
+    dnaSeqDict = SeqIO.to_dict(SeqIO.parse(dnaSeqFile, "fasta"))
 
-# Translate the sequences
-aaSeqRecords = []
-for key in dnaSeqDict:
-    aaSeq = SeqRecord(dnaSeqDict[key].seq.translate(table=11), id=key)
-    aaSeqRecords.append(aaSeq)
-dnaSeqFile.close()
-# temporarily write them to a file
-#tempaafile = open('tempaa.txt', 'w')
-#for aaSeq in aaSeqRecords:
-#    print >>tempaafile, '>' + aaSeq.id + '\n' + aaSeq.seq
-#tempaafile.close()
-#dnaSeqFile.close()
+    # Translate the sequences
+    aaSeqRecords = []
+    for key in dnaSeqDict:
+        aaSeq = SeqRecord(dnaSeqDict[key].seq.translate(table=translationTable), id=key)
+        aaSeqRecords.append(aaSeq)
+    dnaSeqFile.close()
 
-# Align the aa sequences
-commandLine = str(MuscleCommandline())
-childProcess = subprocess.Popen(commandLine, stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=(sys.platform!="win32")) # note - it is important not to pipe stderr or it will hang
-SeqIO.write(aaSeqRecords, childProcess.stdin, "fasta")
-childProcess.stdin.close()
-alignment = AlignIO.read(childProcess.stdout, "fasta")
-print alignment[1].seq
+    # Replace stop codons with X (unknown aa) so muscle doesn't drop them
+    for aaSeq in aaSeqRecords:
+        noStopCodonSeq = str(aaSeq.seq).replace('*', 'X')
+        aaSeq.seq = Seq(noStopCodonSeq)
 
-# Convert the aa alignment back into dna
-for taxon in alignment:
-    pass
+    # Align the aa sequences
+    commandLine = str(MuscleCommandline(seqtype='protein'))
+    childProcess = subprocess.Popen(commandLine, stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=(sys.platform!="win32")) #don't pipe stderr or muscle hangs
+    SeqIO.write(aaSeqRecords, childProcess.stdin, "fasta")
+    childProcess.stdin.close()
+    aaAlignment = AlignIO.read(childProcess.stdout, "fasta")
+
+    # Convert the aa alignment into a dna alignment
+    dnaAlignment = Alignment(Gapped(IUPAC.unambiguous_dna, "-"))
+    for taxon in aaAlignment:
+        aaCount = 0
+        dnaSeq = ''
+        for aaResidue in taxon.seq:
+            if (aaResidue == '-'):
+                dnaSeq = dnaSeq + '---'
+            else:
+                dnaSeq = dnaSeq + dnaSeqDict[taxon.id].seq[aaCount*3:aaCount*3+3]
+                aaCount+=1
+        dnaAlignment.add_sequence(taxon.id.split('_')[0], str(dnaSeq)) #As we add the sequences to the alignment, remove the gene name from the sequence id's so the taxon names will match the taxon names I'm using on the PAML constraint tree
+    outFileName = argv[1].split('.')[0] + '_aln.phy'
+    outFile = open(outFileName, 'w+')
+    AlignIO.write([dnaAlignment], outFile, "phylip")
+
+    # Biopython doesn't tag Interleaved phylip files and PAML requires it so...
+    outFile.seek(0,0)
+    modifiedAlignmentText = outFile.readlines()
+    modifiedAlignmentText[0] = modifiedAlignmentText[0].rstrip() + ' I\n'
+    outFile.seek(0,0)
+    outFile.writelines(modifiedAlignmentText)
+    outFile.close()
+
+#Need to remove the alignment columns that contain stop codons - or not... maybe it is best to leave them until we've made manual adjustments to the alignment
 
 
-"""
-# Align the sequences (dna now, need to change to aa)
-commandLine = str(MuscleCommandline())
-childProcess = subprocess.Popen(commandLine, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=(sys.platform!="win32"))
-SeqIO.write(dnaSeqRecords, childProcess.stdin, "fasta")
-childProcess.stdin.close()
-alignment = AlignIO.read(childProcess.stdout, "fasta")
-print alignment
-"""
-
+if __name__=='__main__':
+    main()
