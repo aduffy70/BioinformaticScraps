@@ -2,7 +2,7 @@ NAME
 BioinformaticScraps
 
 DESCRIPTION
-A random, unorganized collection of my bits and pieces for processing bioinformatics data
+A semi-organized collection of my bits and pieces for processing bioinformatics data
 
 
 AFLP SCRIPTS:
@@ -45,6 +45,9 @@ conscount.pl
 
 
 BLAST SCRIPTS
+
+muscletrans.py
+    This script takes a fasta file of dna sequences and performs a translation alignment using MUSCLE.  Stop codons in the translation are converted to unknown amino acids for the alignment (so MUSCLE doesn't drop them), but the original nucleotides are displayed in the final dna alignment.  The final alignment is saved to a file in interleaved phylip format.
 
 countblastqueries.pl
     This script finds the number of different blast queries that had hits in tabular blast output.  The list must be sorted by query.  Usage- I have a list of 7500 blast hits against my adiantum/angiopteris genes database.  I want to know how many of the queries in the original blast input file had at least one match in the database.
