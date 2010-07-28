@@ -1,0 +1,5 @@
+args = commandArgs()
+dNdSData = read.csv(args[7])
+attach(dNdSData)
+wilcox.test(Fern_dN, Seedplant_dN)
+wilcox.test(Fern_dS, Seedplant_dS)

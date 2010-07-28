@@ -174,6 +174,9 @@ findprimer.pl
 pop2struct.pl
     This script converts a genepop input file to a structure input file.  It only works on files with a specific number of loci and the same number of digits in each allele record.
 
+gettaxanames.pl
+    This script extracts the taxon names from a nexus file.
+
 unique.pl
     This script finds the unique items in 2 files containing a list of genes.  The files must be lists with a single gene name starting each row (the output from my listgenes.pl script for example).  Any other information on the line will be ignored.  This script does not compare the files very efficiently so it may take a while for very long files.
 
@@ -182,3 +185,15 @@ conservedmsats.py
 
 mlcminer.py
     This script extracts dN/dS, dN and dS values from a directory of PAML output files (.mlc files).  It "mines" data from mlc files.  It is 3 separate scripts in one file.  Uncomment one section at a time to get dNdS values, dN values, and dS values.
+
+mlcminer2.py
+    This script extracts dN and dS values from a directory of PAML output files (.mlc files) and writes them to a separate csv file for each gene.  It "mines" data from mlc files.  Unlike mlcminer.py, this script doesn't average the dN and dS values - it extracts the raw values so we can use them in statistical analyses.  It also ignores the outgroup values.
+
+wilcox.r
+    These [R] commands run two wilcoxon rank tests (1 on the first 2 columns of a csv file and one on the 3rd & 4th columns).
+    
+wilcox.py
+    This script is a python wrapper for the wilcox.r script.  That script runs two wilcoxon rank tests (1 on the first 2 columns of a csv file and one on the 3rd & 4th columns).  This wrapper lets us run the R script on every csv file in a folder and save the results to one long text file.
+    
+wilcoxparse.py
+    This script extracts just the p-values from the output of wilcox.py.  Output of this script is csv format: GeneName,dN_p-value,dS_p-value
