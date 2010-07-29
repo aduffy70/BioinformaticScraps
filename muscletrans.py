@@ -1,13 +1,15 @@
 #! /usr/bin/env python
 # muscletrans.py
-# Given a fasta file of dna sequences, performs a translation alignment using muscle with default settings.
-# Saves the interleaved phylip format alignment to a file with the suffix _aln.phy. 
-# Uses the bacterial translation table by default (see configuration section below)
-# Requires muscle in your $PATH
-# Usage: muscletrans.py <file with multiple dna sequences in fasta format>
-# Aaron M Duffy aduffy70{at}gmail.com
-# July 2010
 
+"""
+Given a fasta file of dna sequences, performs a translation alignment using muscle with default settings.
+Saves the interleaved phylip format alignment to a file with the suffix _aln.phy.
+Uses the bacterial translation table by default (see configuration section).
+Requires muscle in your $PATH
+Usage: muscletrans.py <file with multiple dna sequences in fasta format>
+Aaron M Duffy aduffy70{at}gmail.com
+July 2010
+"""
 
 from sys import argv
 from Bio import SeqIO, AlignIO
@@ -17,6 +19,8 @@ from Bio.Alphabet import IUPAC, Gapped
 from Bio.Seq import Seq, SeqRecord
 import subprocess
 import sys
+import fileinput
+import random
 
 def main():
     # Configuration
@@ -24,7 +28,11 @@ def main():
     translationTable = 11
 
     # Open the DNA sequence file and read the fasta sequences into a dictionary
-    dnaSeqFile = open(argv[1], 'r')
+    if (len(argv) > 1):
+        dnaFileName = argv[1]
+    else:
+        dnaFileName = None
+    dnaSeqFile = fileinput.input(dnaFileName)
     dnaSeqDict = SeqIO.to_dict(SeqIO.parse(dnaSeqFile, "fasta"))
 
     # Translate the sequences
@@ -57,8 +65,12 @@ def main():
             else:
                 dnaSeq = dnaSeq + dnaSeqDict[taxon.id].seq[aaCount*3:aaCount*3+3]
                 aaCount+=1
-        dnaAlignment.add_sequence(taxon.id.split('_')[0], str(dnaSeq)) #As we add the sequences to the alignment, remove the gene name from the sequence id's so the taxon names will match the taxon names I'm using on the PAML constraint tree
-    outFileName = argv[1].split('.')[0] + '_aln.phy'
+        # As we add the sequences to the alignment remove gene name from the sequence id so they taxon match the PAML constraint tree
+        dnaAlignment.add_sequence(taxon.id.split('_')[0], str(dnaSeq))
+    if (dnaFileName):
+        outFileName = dnaFileName.split('.')[0] + '_aln.phy'
+    else:
+        outFileName = 'out_aln.phy'
     outFile = open(outFileName, 'w+')
     AlignIO.write([dnaAlignment], outFile, "phylip")
 
@@ -70,7 +82,7 @@ def main():
     outFile.writelines(modifiedAlignmentText)
     outFile.close()
 
-#Need to remove the alignment columns that contain stop codons - or not... maybe it is best to leave them until we've made manual adjustments to the alignment
+    #We could remove the alignment columns that contain stop codons but maybe it is best to leave them until we've made manual adjustments to the alignment
 
 
 if __name__=='__main__':
