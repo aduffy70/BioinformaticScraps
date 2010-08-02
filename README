@@ -43,11 +43,14 @@ consaminocount.pl
 conscount.pl
     This script takes a consensus sequence in fasta format with ambiguous characters and counts the number of ambiguous characters (i.e., nonconserved characters) in each block of 50 nucleotides.
 
-
-BLAST SCRIPTS
-
 muscletrans.py
     This script takes a fasta file of dna sequences and performs a translation alignment using MUSCLE.  Stop codons in the translation are converted to unknown amino acids for the alignment (so MUSCLE doesn't drop them), but the original nucleotides are displayed in the final dna alignment.  The final alignment is saved to a file in interleaved phylip format.
+
+alignedit.py
+    My basic command-line alignment viewer/editor.
+    
+
+BLAST SCRIPTS
 
 countblastqueries.pl
     This script finds the number of different blast queries that had hits in tabular blast output.  The list must be sorted by query.  Usage- I have a list of 7500 blast hits against my adiantum/angiopteris genes database.  I want to know how many of the queries in the original blast input file had at least one match in the database.
