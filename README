@@ -46,8 +46,8 @@ conscount.pl
 muscletrans.py
     This script takes a fasta file of dna sequences and performs a translation alignment using MUSCLE.  Stop codons in the translation are converted to unknown amino acids for the alignment (so MUSCLE doesn't drop them), but the original nucleotides are displayed in the final dna alignment.  The final alignment is saved to a file in interleaved phylip format.
 
-alignedit.py
-    My basic command-line alignment viewer/editor.
+assae.py
+    Aaron's Super Simple Alignment Editor.  My commandline-based multiple sequence alignment viewer/editor.
     
 
 BLAST SCRIPTS
