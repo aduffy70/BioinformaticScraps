@@ -278,7 +278,7 @@ class DisplayedAlignment(object):
             for Sequence in self.alignment:
                 if (taxon in range(startTaxon, stopTaxon + 1)):
                     if (startColumn > 0):
-                        Sequence.seq = Sequence.seq[:startColumn] + Seq('-' * changeLength) + Sequence.seq[stopColumn:]
+                        Sequence.seq = Sequence.seq[:startColumn] + Seq('-' * changeLength) + Sequence.seq[startColumn:]
                     else:
                         Sequence.seq = Seq('-' * changeLength) + Sequence.seq[:]
                 else:
