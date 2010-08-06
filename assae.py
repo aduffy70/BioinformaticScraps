@@ -149,9 +149,15 @@ class DisplayedAlignment(object):
         if column < 0:
             column = 0
         row = 0
+        marker = '|    :    ' * 10
+        spacer = ' ' * 15
+        markerRow = spacer + marker
         if (self.translated == False):
-            marker = '|         ' * 10
-            print '               ' + str(column) + '\n               ' + marker
+            indexRow = spacer
+            for index in range(column, column + 100, 10):
+                indexRow = indexRow + str(index).ljust(10)
+            print indexRow
+            print markerRow
             for sequence in self.alignment[:,column:column + 100]:
                 print '%2d) %10s' % (row, sequence.id),
                 dnaSequence = ''
@@ -163,9 +169,14 @@ class DisplayedAlignment(object):
                 else:
                     print
                 row += 1
+            print markerRow
+            print indexRow
         else:
-            marker = '|         ' * 10
-            print '               ' + str(column / 3) + '\n               ' + marker
+            indexRow = spacer
+            for index in range(column / 3, (column / 3) + 100, 10):
+                indexRow = indexRow + str(index).ljust(10)
+            print indexRow
+            print markerRow
             for sequence in self.alignment[:, column:column + 300]:
                 proteinSequence = ''
                 for codonPosition in range(0, len(sequence), 3):
@@ -182,6 +193,8 @@ class DisplayedAlignment(object):
                 else:
                     print
                 row += 1
+            print markerRow
+            print indexRow
         self.displayedColumn = column
 
     def BackupAlignment(self):
@@ -208,7 +221,7 @@ class DisplayedAlignment(object):
         startTaxon, stopTaxon, startColumn, stopColumn = self.ParseIndex(rangeText)
         if (self.translated == True):
             startColumn = startColumn * 3
-            stopColumn = (startColumn * 3) + 2
+            stopColumn = (stopColumn * 3) + 2
         if (startTaxon >= 0): #Make sure we had a valid range
             changeLength = 0
             deleteTaxon = False
