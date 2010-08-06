@@ -283,7 +283,7 @@ class DisplayedAlignment(object):
         startTaxon, stopTaxon, startColumn, stopColumn = self.ParseIndex(rangeText)
         if (self.translated == True):
             startColumn = startColumn * 3
-            stopColumn = (startColumn * 3) + 2
+            stopColumn = (stopColumn * 3) + 2
         if (startTaxon >= 0): #Make sure we had a valid range
             changeLength = (stopColumn - startColumn) + 1
             taxon = 0
