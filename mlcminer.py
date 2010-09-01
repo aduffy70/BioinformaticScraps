@@ -2,6 +2,7 @@
 # mlcminer.py
 # Extracts dN/dS values from a directory of PAML output files (.mlc files).  It "mines" data from mlc files...
 # 3 scripts in one.  Uncomment one section at a time to get dNdS values, dN values, and dS values
+# Usage: mlcminer.py <name of folder containing all the .mlc files>
 # Aaron M Duffy aduffy70{at}gmail.com
 # June 2010
 
@@ -88,3 +89,4 @@ for fileName in glob.glob(os.path.join(path, '*.mlc')):
                 Previous = dNdS
     dSAverage = dSSum / count
     print dSAverage
+
