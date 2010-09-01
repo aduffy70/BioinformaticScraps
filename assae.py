@@ -418,29 +418,29 @@ if __name__ == '__main__':
     alignment = DisplayedAlignment(alignmentFromFile)
     alignment.Show(0)
     choice = ''
-    while (choice != 'X'):
+    while (choice != 'x'):
         print '(#)Jump', '(<>)Scroll', '(t)Translate', '(r)Reverse', '(c)Complement', '(rc)Rev-comp', '(d)Delete', '(i)Insert', '(m)Modify', '(cl)Cleanup'
         print '(z)Undo', '(s)Save', '(x)Exit'
-        choice = raw_input('Command: ').upper()
-        if (choice == 'Z'):
+        choice = raw_input('Command: ')
+        if (choice == 'z'):
             alignment.UndoChanges()
-        elif (choice == 'R'):
+        elif (choice == 'r'):
             alignment.Reverse()
-        elif (choice == 'C'):
+        elif (choice == 'c'):
             alignment.Complement()
-        elif (choice == 'RC'):
+        elif (choice == 'rc'):
             alignment.ReverseComplement()
         elif (choice == '>'):
             alignment.ScrollRight(100)
         elif (choice == '<'):
             alignment.ScrollLeft(100)
-        elif (choice == 'T'):
+        elif (choice == 't'):
             alignment.Translate()
         elif (choice == ''):
             alignment.ScrollRight(1)
-        elif (choice == 'S'):
+        elif (choice == 's'):
             alignment.Save()
-        elif (choice == 'CL'):
+        elif (choice == 'cl'):
             alignment.CleanUp()
         else:
             displayPattern = re.compile('^(\d+)')
@@ -448,7 +448,7 @@ if __name__ == '__main__':
             if (match):
                 alignment.Jump(int(match.group(1)))
             else:
-                translatePattern = re.compile('^T(\d+)')
+                translatePattern = re.compile('^t(\d+)')
                 match = translatePattern.search(choice)
                 if (match):
                     alignment.Translate(int(match.group(1)))
@@ -463,23 +463,28 @@ if __name__ == '__main__':
                         if (match):
                             alignment.ScrollRight(int(match.group(1)))
                         else:
-                            savePattern = re.compile('^S(\S+),(\S+)')
+                            savePattern = re.compile('^s(\S+),(\S+)')
                             match = savePattern.search(choice)
                             if (match):
                                 alignment.Save(match.group(1), match.group(2))
                             else:
-                                deleteRangePattern = re.compile('^D(.*)')
-                                match = deleteRangePattern.search(choice)
+                                shortSavePattern = re.compile('^s(\S+)')
+                                match = shortSavePattern.search(choice)
                                 if (match):
-                                    alignment.DeleteRange(match.group(1))
+                                    alignment.Save(match.group(1), 'phylip')
                                 else:
-                                    modifyRangePattern = re.compile('^M(.*)(\S)')
-                                    match = modifyRangePattern.search(choice)
+                                    deleteRangePattern = re.compile('^d(.*)')
+                                    match = deleteRangePattern.search(choice)
                                     if (match):
-                                        alignment.ModifyRange(match.group(1), match.group(2))
+                                        alignment.DeleteRange(match.group(1))
                                     else:
-                                        insertRangePattern = re.compile('^I(.*)')
-                                        match = insertRangePattern.search(choice)
+                                        modifyRangePattern = re.compile('^m(.*)(\S)')
+                                        match = modifyRangePattern.search(choice)
                                         if (match):
-                                            alignment.InsertRange(match.group(1))
+                                            alignment.ModifyRange(match.group(1), match.group(2))
+                                        else:
+                                            insertRangePattern = re.compile('^i(.*)')
+                                            match = insertRangePattern.search(choice)
+                                            if (match):
+                                                alignment.InsertRange(match.group(1))
 
