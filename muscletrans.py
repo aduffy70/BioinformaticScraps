@@ -74,12 +74,14 @@ def main():
     outFile = open(outFileName, 'w+')
     AlignIO.write([dnaAlignment], outFile, "phylip")
 
+#I think this section should be removed.  If I put the 'I' into the alignment file now, I can't open the alignment with BioPython-based scripts (for manual editing etc).  I can use pamlize.py to add the I right before using paml.
     # Biopython doesn't tag Interleaved phylip files and PAML requires it so...
-    outFile.seek(0,0)
-    modifiedAlignmentText = outFile.readlines()
-    modifiedAlignmentText[0] = modifiedAlignmentText[0].rstrip() + ' I\n'
-    outFile.seek(0,0)
-    outFile.writelines(modifiedAlignmentText)
+#    outFile.seek(0,0)
+#    modifiedAlignmentText = outFile.readlines()
+#    modifiedAlignmentText[0] = modifiedAlignmentText[0].rstrip() + ' I\n'
+#    outFile.seek(0,0)
+#    outFile.writelines(modifiedAlignmentText)
+
     outFile.close()
 
     #We could remove the alignment columns that contain stop codons but maybe it is best to leave them until we've made manual adjustments to the alignment
