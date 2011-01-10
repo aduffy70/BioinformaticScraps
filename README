@@ -61,6 +61,8 @@ countgenes.pl
 msatblast.py
     This script takes the blast output produced by conservedmsats.py along with the contig fasta files for two taxa and aligns each pair of sequences that showed blast similarity.  Then the alignments can be manually inspected to see if the microsatellite is actually within the aligned region and whether there is enough conserved sequence to design universal primers.
 
+batchblast.py
+    This script takes a fasta file, blasts the sequences against NCBI's nr database and saves the result as an xml file.
 
 FASTA FILE SCRIPTS
 
