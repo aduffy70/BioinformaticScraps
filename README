@@ -64,6 +64,9 @@ msatblast.py
 batchblast.py
     This script takes a fasta file, blasts the sequences against NCBI's nr database and saves the result as an xml file.
 
+blastglance.py
+    Returns the total number of queries and number of queries with no hits in a blast xml file.
+
 FASTA FILE SCRIPTS
 
 fastaclean.pl
