@@ -67,6 +67,9 @@ batchblast.py
 blastglance.py
     Returns the total number of queries and number of queries with no hits in a blast xml file.
 
+microarray2go.py
+    Takes a csv file of microarray markers as input and returns a file showing the top blastn hit of the marker 70mers against an EST database and the top blastx hit of those ESTs against the nr protein database.  Those protein sequences can then be used in a searches against GO databases.
+
 FASTA FILE SCRIPTS
 
 fastaclean.pl
