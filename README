@@ -208,3 +208,9 @@ wilcox.py
     
 wilcoxparse.py
     This script extracts just the p-values from the output of wilcox.py.  Output of this script is csv format: GeneName,dN_p-value,dS_p-value
+
+compare2lists.py
+    This script compares two files of genenames (or anything, really) and returns counts and lists of items in just the first file, just the second file, or both files (i.e., the data needed to generate a venn diagram).
+
+comparelists.py
+    This script does the same thing as compare2lists.py but works on any number of files, returning the counts and lists of items in just one file or in every combination of files.
