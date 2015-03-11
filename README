@@ -93,6 +93,9 @@ fastanames.pl
 fastaglance.py
     Returns the total number of records, mean sequence length, longest sequence, and shortest sequence for a fasta file.
 
+fastalengths.py
+    Returns the name and length of each sequence in a fasta file.
+
 fastabreaks.py
     Removes line breaks so that a fasta file has only 2 lines per record: 1 for the id and one for the sequence.  This avoids issues that extra line breaks can cause for some scripts.
 
