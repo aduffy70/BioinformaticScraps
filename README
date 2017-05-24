@@ -48,7 +48,7 @@ muscletrans.py
 
 assae.py
     Aaron's Super Simple Alignment Editor.  My commandline-based multiple sequence alignment viewer/editor.
-    
+
 
 BLAST SCRIPTS
 
@@ -205,10 +205,10 @@ mlcminer2.py
 
 wilcox.r
     These [R] commands run two wilcoxon rank tests (1 on the first 2 columns of a csv file and one on the 3rd & 4th columns).
-    
+
 wilcox.py
     This script is a python wrapper for the wilcox.r script.  That script runs two wilcoxon rank tests (1 on the first 2 columns of a csv file and one on the 3rd & 4th columns).  This wrapper lets us run the R script on every csv file in a folder and save the results to one long text file.
-    
+
 wilcoxparse.py
     This script extracts just the p-values from the output of wilcox.py.  Output of this script is csv format: GeneName,dN_p-value,dS_p-value
 
@@ -217,3 +217,6 @@ compare2lists.py
 
 comparelists.py
     This script does the same thing as compare2lists.py but works on any number of files, returning the counts and lists of items in just one file or in every combination of files.
+
+extract_hplc_data.py
+    Extracts data from multiple HPLC files in the format needed for analysis in the Coulombe Lab.
