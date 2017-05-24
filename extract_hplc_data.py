@@ -11,8 +11,8 @@
 
 # usage extract_hplc_data.py order_string > output_file.csv
 # The order string consists of comma separated sample names in the order you want them returned (NO SPACES and NO DUPLICATE NAMES)
-# To match our "normal" order:
-# 2,10,18,3,11,19,4,12,20,5,13,21,1,9,17,6,14,22,7,15,s1,s1a,s2,s2a,s3,s3a,s4,s4a,s5,s5a
+# To match our new "normal" order starting 2017-05-24:
+# 3,15,27,2,14,26,4,16,28,5,17,29,6,18,30,7,19,31,8,20,32,9,21,33,10,22,34,11,23,35,12,24,36,s1,s1a,s2,s2a,s3,s3a,s4,s4a,s5,s5a
 
 import sys
 import glob # For looking at filenames
