@@ -204,3 +204,6 @@ comparelists.py
 
 extract_hplc_data.py
   * Extracts data from multiple HPLC files in the format needed for analysis in the Coulombe Lab.
+
+filter_structure_file_by_informative_loci.py
+  * Removes non-variable and autapomorphic loci from a structure file
